@@ -212,7 +212,7 @@ export default function AddTransaction({ onAdd, onCancel, language = 'zh', theme
   const currentTheme = categoryThemeMap[category] || categoryThemeMap['Eat'];
 
   return (
-    <div className={`flex-1 overflow-y-auto pb-32 pt-10 px-4 h-full scrollbar-none transition-colors duration-200 ${
+    <div className={`flex-1 overflow-y-auto pb-24 pt-10 px-4 h-full scrollbar-none transition-colors duration-200 ${
       isDark ? 'bg-slate-900 text-slate-100' : 'bg-gray-50 text-gray-900'
     }`}>
       <div className="flex justify-between items-center mb-4">
