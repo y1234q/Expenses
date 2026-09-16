@@ -341,19 +341,13 @@ export default function App() {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-[100dvh] flex sm:items-center justify-center font-sans antialiased select-none transition-colors duration-300 ${
-      isDark ? 'bg-slate-900 sm:bg-slate-950 text-slate-100' : 'bg-gray-50 sm:bg-slate-900 text-gray-900'
+    <div className={`fixed inset-0 flex justify-center font-sans antialiased select-none transition-colors duration-300 ${
+      isDark ? 'bg-slate-950' : 'bg-gray-200'
     }`}>
-      {/* iOS Device Chassis Constraint */}
-      <div className={`w-full sm:max-w-[412px] min-h-[100dvh] sm:min-h-0 sm:h-[840px] sm:rounded-[3.2rem] sm:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] sm:border-[10px] sm:border-gray-900 relative flex flex-col transition-colors duration-300 ${
+      <div className={`w-full max-w-md h-full relative flex flex-col overflow-hidden shadow-2xl transition-colors duration-300 ${
         isDark ? 'bg-slate-900 text-slate-100' : 'bg-gray-50 text-gray-900'
       }`}>
         
-        {/* Dynamic Island / Notch Spacer (Desktop simulation) */}
-        <div className="hidden sm:flex absolute top-0 inset-x-0 h-7 z-50 justify-center items-center pointer-events-none">
-          <div className="w-28 h-5 bg-gray-900 rounded-b-2xl"></div>
-        </div>
-
         {/* Views */}
         {activeTab === 'dashboard' && (
           <Dashboard 
