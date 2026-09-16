@@ -1,0 +1,82 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Global Helpers
+    function isSignedIn() { return request.auth != null; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    // 3. Validation Helpers
+    function isValidTransaction(data, expectedUserId) {
+      return data.keys().hasAll(['amount', 'type', 'category', 'date', 'currency', 'userId', 'createdAt', 'updatedAt'])
+        && data.amount is number
+        && data.currency is string && data.currency.size() <= 3
+        && data.type in ['income', 'expense']
+        && data.category is string && data.category.size() <= 100
+        && data.date is string && data.date.size() <= 30
+        && data.userId == expectedUserId
+        && (!('subcategory' in data) || (data.subcategory is string && data.subcategory.size() <= 100))
+        && (!('note' in data) || (data.note is string && data.note.size() <= 500))
+        && (!('tags' in data) || (data.tags is list && data.tags.size() <= 10 && (data.tags.size() == 0 || data.tags[0] is string)));
+    }
+
+    function isValidUserSetting(data, expectedUserId) {
+      return data.keys().hasAll(['userId', 'createdAt', 'updatedAt'])
+        && data.userId == expectedUserId
+        && (!('categoryBudgets' in data) || (data.categoryBudgets is string && data.categoryBudgets.size() <= 5000))
+        && (!('language' in data) || (data.language is string && data.language.size() <= 10))
+        && (!('theme' in data) || (data.theme is string && data.theme.size() <= 10));
+    }
+
+    // 4. Data Rules
+    match /users/{userId} {
+      // Allow read so users can access their own document root if needed (though we only query subcollections)
+      allow read: if isSignedIn() && request.auth.uid == userId;
+      
+      match /transactions/{transactionId} {
+        allow read: if isSignedIn() && request.auth.uid == userId;
+        
+        allow create: if isSignedIn() 
+          && request.auth.uid == userId 
+          && isValidId(transactionId)
+          && isValidTransaction(incoming(), userId)
+          && incoming().createdAt == request.time
+          && incoming().updatedAt == request.time;
+          
+        allow update: if isSignedIn() 
+          && request.auth.uid == userId 
+          && isValidTransaction(incoming(), userId)
+          && incoming().createdAt == existing().createdAt
+          && incoming().updatedAt == request.time
+          && incoming().userId == existing().userId;
+          
+        allow delete: if isSignedIn() && request.auth.uid == userId && isValidId(transactionId);
+      }
+
+      match /settings/{settingId} {
+        allow read: if isSignedIn() && request.auth.uid == userId;
+        
+        allow create: if isSignedIn() 
+          && request.auth.uid == userId 
+          && isValidId(settingId)
+          && isValidUserSetting(incoming(), userId)
+          && incoming().createdAt == request.time
+          && incoming().updatedAt == request.time;
+          
+        allow update: if isSignedIn() 
+          && request.auth.uid == userId 
+          && isValidUserSetting(incoming(), userId)
+          && incoming().createdAt == existing().createdAt
+          && incoming().updatedAt == request.time
+          && incoming().userId == existing().userId;
+      }
+    }
+  }
+}

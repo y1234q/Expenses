@@ -1,0 +1,436 @@
+import type { Language } from './types';
+
+export const CATEGORY_TRANSLATIONS: { [key: string]: { zh: string; en: string } } = {
+  'Eat': { zh: '餐飲外食', en: 'Eat & Dining' },
+  'Daily Use': { zh: '日常用品', en: 'Daily Use' },
+  'Housing': { zh: '居住水電', en: 'Housing' },
+  'Transport': { zh: '交通出行', en: 'Transport' },
+  'Entertainment': { zh: '休閒娛樂', en: 'Entertainment' },
+  'Shop': { zh: '購物消費', en: 'Shopping' },
+  'Medical': { zh: '醫療健康', en: 'Medical & Health' },
+  'Salary': { zh: '工作薪資', en: 'Salary' },
+  'Freelance': { zh: '接案副業', en: 'Freelance' },
+  'Investments': { zh: '投資理財', en: 'Investments' },
+  'Other Income': { zh: '其他收入', en: 'Other Income' },
+  'Other': { zh: '其他支出', en: 'Other' },
+};
+
+export const SUBCATEGORY_TRANSLATIONS: { [key: string]: { zh: string; en: string } } = {
+  // Eat
+  'Breakfast': { zh: '早餐', en: 'Breakfast' },
+  'Lunch': { zh: '午餐', en: 'Lunch' },
+  'Dinner': { zh: '晚餐', en: 'Dinner' },
+  'Supper': { zh: '宵夜', en: 'Supper' },
+  'Dessert': { zh: '甜點蛋糕', en: 'Dessert' },
+  'Drinks': { zh: '飲料咖啡', en: 'Drinks & Coffee' },
+  // Daily Use
+  'Grocery': { zh: '生鮮食材', en: 'Grocery' },
+  'Housework': { zh: '家事清潔', en: 'Housework' },
+  'Personal Care': { zh: '個人護理', en: 'Personal Care' },
+  'Fitness': { zh: '健身運動', en: 'Fitness' },
+  'Salons & Beauty': { zh: '美髮美容', en: 'Salons & Beauty' },
+  'Snacks': { zh: '零食餅乾', en: 'Snacks' },
+  // Housing
+  'House Rent': { zh: '房屋租金', en: 'House Rent' },
+  'Electricity': { zh: '電費', en: 'Electricity' },
+  'Water Use': { zh: '水費', en: 'Water' },
+  'Accommodation': { zh: '住宿飯店', en: 'Accommodation' },
+  // Transport
+  'Bus': { zh: '公車', en: 'Bus' },
+  'Metro': { zh: '捷運地鐵', en: 'Metro / MRT' },
+  'Train': { zh: '火車高鐵', en: 'Train / High Speed Rail' },
+  'Flight': { zh: '飛機機票', en: 'Flight' },
+  'Fuel': { zh: '加油費', en: 'Fuel' },
+  'Taxi': { zh: '計程車叫車', en: 'Taxi / Rideshare' },
+  'Parking': { zh: '停車場費', en: 'Parking' },
+  // Entertainment
+  'Movie': { zh: '看電影', en: 'Movie' },
+  'KTV': { zh: 'KTV 唱歌', en: 'KTV' },
+  'Club': { zh: '夜店酒吧', en: 'Club & Pub' },
+  'Alcohol': { zh: '菸酒飲料', en: 'Alcohol' },
+  'Theme Park': { zh: '主題樂園', en: 'Theme Park' },
+  // Shop
+  'Clothes': { zh: '服飾衣服', en: 'Clothes' },
+  'Shoes': { zh: '鞋款', en: 'Shoes' },
+  'Jewelry': { zh: '飾品首飾', en: 'Jewelry' },
+  'Cosmetics': { zh: '美妝保養', en: 'Cosmetics' },
+  'Toys': { zh: '玩具模型', en: 'Toys & Hobbies' },
+  'Electronics': { zh: '3C 數位', en: 'Electronics' },
+  'Furniture': { zh: '傢俱軟裝', en: 'Furniture' },
+  // Medical
+  'Health Check': { zh: '健康檢查', en: 'Health Check' },
+  'Drugs': { zh: '藥品醫療', en: 'Drugs & Medicine' },
+  'Doctor': { zh: '門診看診', en: 'Doctor Visit' },
+  'Gifts': { zh: '禮物贈答', en: 'Gifts' },
+  // Income
+  'Regular Salary': { zh: '正職薪資', en: 'Regular Salary' },
+  'Overtime Pay': { zh: '加班費', en: 'Overtime Pay' },
+  'Bonus': { zh: '年終獎金', en: 'Bonus' },
+  'Consulting': { zh: '諮詢顧問', en: 'Consulting' },
+  'Design & Dev': { zh: '設計開發', en: 'Design & Dev' },
+  'Side Business': { zh: '副業小賣', en: 'Side Business' },
+  'Dividends': { zh: '股息分紅', en: 'Dividends' },
+  'Stocks': { zh: '股票獲利', en: 'Stocks' },
+  'Crypto': { zh: '加密貨幣', en: 'Crypto' },
+  'Interest': { zh: '銀行利息', en: 'Interest' },
+  'Rental Income': { zh: '收租收入', en: 'Rental Income' },
+  'Gifts / Red Packets': { zh: '壓歲紅包', en: 'Red Packets / Gifts' },
+  'Refunds & Cashbacks': { zh: '退款回饋', en: 'Refunds & Cashbacks' },
+  'Allowances': { zh: '生活零用金', en: 'Allowances' },
+  'Selling Used Items': { zh: '二手拍賣', en: 'Selling Used Items' }
+};
+
+export function getCategoryLabel(category: string, lang: Language): string {
+  if (lang === 'zh') {
+    return CATEGORY_TRANSLATIONS[category]?.zh || category;
+  }
+  return CATEGORY_TRANSLATIONS[category]?.en || category;
+}
+
+export function getSubcategoryLabel(subcategory: string, lang: Language): string {
+  if (lang === 'zh') {
+    return SUBCATEGORY_TRANSLATIONS[subcategory]?.zh || subcategory;
+  }
+  return SUBCATEGORY_TRANSLATIONS[subcategory]?.en || subcategory;
+}
+
+export const TRANSLATIONS = {
+  zh: {
+    // Navigation & Tabs
+    dashboardTab: '明細概覽',
+    addTab: '新增記帳',
+    analysisTab: '統計分析',
+    recurringTab: '週期固定收支',
+    settingsTab: '系統設定',
+
+    // Dashboard
+    overviewTitle: '本月記帳總覽',
+    overviewSubtitle: '掌握即時收支明細與預算狀況',
+    expenseLabel: '本月總支出',
+    incomeLabel: '本月總收入',
+    balanceLabel: '本期淨結餘',
+    budgetLimitLabel: '月度總預算上限',
+    budgetUsedLabel: '預算使用率',
+    overBudgetAlert: '⚠️ 注意：目前總支出已超出本月預算上限！',
+    filterDay: '本日',
+    filterWeek: '本周',
+    filterMonth: '本月',
+    filterYear: '今年',
+    filterAll: '全部歷史',
+    filterCustom: '自定區間',
+    recentTransactions: '交易明細紀錄',
+    searchPlaceholder: '搜尋備註、分類或 #標籤...',
+    noTransactions: '該時間區間尚無記帳明細',
+    customStartDate: '開始日期',
+    customEndDate: '結束日期',
+    deleteConfirm: '刪除這筆紀錄',
+    totalEntriesCount: '筆記錄',
+
+    // AddTransaction & Multi-currency
+    addTransactionTitle: '新增記帳明細',
+    addTransactionSubtitle: '快速記錄每一筆日常支出與收入',
+    expenseTab: '支出',
+    incomeTab: '收入',
+    currencyLabel: '選擇幣別 (Currency)',
+    amountLabel: '交易金額',
+    amountPlaceholder: '0',
+    categoryLabel: '主分類',
+    subcategoryLabel: '子分類 (選填)',
+    noteLabel: '備註說明 (選填)',
+    notePlaceholder: '例如：與同事聚餐，或加上 #標籤',
+    tagsLabel: '自訂標籤 (選填)',
+    tagsPlaceholder: '輸入標籤後按 Enter (例如: #旅遊)',
+    dateLabel: '交易日期',
+    saveBtn: '儲存此筆記帳',
+    enterValidAmount: '請輸入有效的交易金額！',
+
+    // Analysis & Multi-currency Modes
+    analysisTitle: '支出統計與預算分析',
+    analysisSubtitle: '圓餅圖占比、多幣別切換與分類預算控管',
+    analysisMonthSelect: '選擇分析月份',
+    displayCurrencyLabel: '分析基準顯示幣別',
+    multiCurrencyBreakdown: '各幣別原始消費總額',
+    singleConvertedTotal: '折算統一幣別總額',
+    exchangeRateHint: '匯率參考',
+    displayModeMulti: '模式一：各幣別分別顯示',
+    displayModeConverted: '模式二：換算為單一幣別',
+    totalExpenseCard: '本月累積支出',
+    totalBudgetCard: '本月設定預算',
+    remainingBudgetCard: '剩餘可支用金額',
+    budgetExecutionRate: '預算執行率',
+    editBudgetBtn: '⚙️ 調整分類預算上限',
+    closeEditBudgetBtn: '完成預算設定',
+    pieChartTitle: '各分類支出占比圖',
+    dailyTrendTitle: '本月每日支出趨勢圖',
+    budgetProgressTitle: '各分類預算執行進度',
+    noExpenseData: '本月尚無任何支出紀錄可供分析',
+    overBudgetTag: '已超支',
+    safeBudgetTag: '控管良好',
+    saveBudgetSuccess: '預算設定已更新！',
+    allCategories: '全部類別',
+    clickCategoryHint: '點擊任一類別可查看當月消費明細，再次點擊即可返回',
+    clickAgainToReturn: '再次點擊可返回全覽',
+    backToOverview: '返回分析全覽',
+    categoryMonthlySpending: '當月分類支出明細',
+    categoryShareOfTotal: '佔本月總支出',
+    categoryTransactionsCount: '筆支出紀錄',
+    subcategoryDistribution: '子分類花費分佈',
+    categoryRecordsList: '本月消費明細列表',
+    noCategoryRecords: '本月在此分類尚無任何支出紀錄',
+    categoryBudgetRemaining: '預算剩餘',
+    categoryBudgetOver: '超出預算',
+
+    // Recurring Transactions
+    recurringTitle: '週期性與固定收支管理',
+    recurringSubtitle: '設定房屋租金、每月薪資或訂閱服務，自動固定日期扣款',
+    addRecurringBtn: '➕ 新增固定收支規則',
+    editRecurringBtn: '編輯規則',
+    saveRecurringBtn: '儲存固定收支規則',
+    ruleTitleLabel: '項目名稱',
+    ruleTitlePlaceholder: '例如：房東租金、Netflix 訂閱、每月薪資',
+    recurringDayLabel: '每月扣款/入帳日期',
+    dayOfMonthOption: '日',
+    startMonthLabel: '開始生效月份',
+    amountChangeNotice: '💡 歷史保護機制：調整金額只會影響更新月份（含）之後產生的明細，先前歷史月份之記錄將保持不變！',
+    autoGeneratedTag: '週期自動生成',
+    generateNowBtn: '⚡ 檢查並產生至本月明細',
+    noRecurringRules: '目前尚未設定任何週期性固定收支項目',
+    deleteRuleConfirm: '確定要刪除這項週期性規則嗎？',
+    generateSuccessMsg: '✅ 已自動為您寫入最新的固定收支明細！',
+
+    // Settings Header & Account
+    settingsTitle: '設定與帳號備份',
+    settingsSubtitle: '個人化主題、匯率設定與雲端紀錄同步',
+    accountSectionTitle: '帳號與資料同步',
+    guestUserTitle: '訪客模式（未登入）',
+    guestUserDesc: '登入帳號後即可自動將記帳明細與週期規則備份至雲端，換手機或重新開啟網頁皆可輕鬆「一鍵找回記帳紀錄」！',
+    loginPromptBtn: '登入 / 註冊帳號',
+    demoLoginBtn: '⚡ 一鍵 Demo 免試登入',
+    
+    // Logged in User state
+    loggedInStatus: '已登入帳號 · 雲端自動同步中',
+    lastSynced: '上次備份同步時間',
+    syncNowBtn: '☁️ 立即備份至帳號',
+    restoreNowBtn: '🔄 從帳號找回紀錄',
+    logoutBtn: '登出帳號',
+    syncSuccessMsg: '✅ 記帳紀錄已成功備份至您的專屬帳號！',
+    restoreSuccessMsg: '✅ 已成功從雲端帳號找回所有歷史明細與預算設定！',
+
+    // Exchange Rates Setting
+    exchangeRatesTitle: '自訂換算匯率 (Exchange Rates)',
+    exchangeRatesSubtitle: '設定換算為台幣 (NTD) 之參考匯率',
+
+    // Modal Login / Register
+    modalTitleLogin: '登入個人帳號',
+    modalTitleRegister: '註冊新帳號',
+    modalSubText: '同步與安全備份您的所有日常支出與收入明細',
+    emailLabel: '電子信箱',
+    emailPlaceholder: 'example@domain.com',
+    passwordLabel: '密碼',
+    passwordPlaceholder: '輸入密碼',
+    nameLabel: '用戶暱稱',
+    namePlaceholder: '例如：小明 / Alex',
+    loginSubmit: '登入帳號',
+    registerSubmit: '創建並登入帳號',
+    switchRegister: '還沒有帳號？點此免費註冊',
+    switchLogin: '已有帳號？點此登入',
+    cancel: '取消',
+    fillRequired: '請填寫完整的信箱與密碼！',
+
+    // Preferences: Theme & Language
+    preferencesTitle: '個人化喜好偏好',
+    themeLabel: '外觀主題模式 (Theme)',
+    lightMode: '☀️ 明亮模式 (Light)',
+    darkMode: '🌙 暗黑模式 (Dark)',
+    languageLabel: '顯示語言 (Language)',
+    zhLang: '繁體中文 (Chinese)',
+    enLang: 'English',
+
+    // Budget Summary & Reset
+    budgetOverviewTitle: '月度預算總額',
+    budgetTotalLabel: '各分類預算設定總計',
+    budgetNote: '如需調整各類別預算上限，請至「統計分析」頁面進行配置。',
+    dataManagementTitle: '資料管理與重置',
+    resetDemoDataBtn: '🗑️ 重置為預設範例資料',
+    confirmResetAlert: '確定要將所有記帳資料重置為初始範例資料嗎？',
+    resetSuccessAlert: '資料已成功重置！',
+
+    // General app terms
+    totalExpense: '本月總支出',
+    totalIncome: '本月總收入',
+    netBalance: '結餘金額',
+    budgetRemaining: '預算剩餘',
+    budgetOver: '已超出預算',
+  },
+  en: {
+    // Navigation & Tabs
+    dashboardTab: 'Dashboard',
+    addTab: 'Add Record',
+    analysisTab: 'Analytics',
+    recurringTab: 'Recurring',
+    settingsTab: 'Settings',
+
+    // Dashboard
+    overviewTitle: 'Monthly Overview',
+    overviewSubtitle: 'Track real-time income, expenses & budget',
+    expenseLabel: 'Total Expenses',
+    incomeLabel: 'Total Income',
+    balanceLabel: 'Net Balance',
+    budgetLimitLabel: 'Monthly Budget Limit',
+    budgetUsedLabel: 'Budget Usage',
+    overBudgetAlert: '⚠️ Warning: Total expenses exceeded monthly budget!',
+    filterDay: 'Today',
+    filterWeek: 'This Week',
+    filterMonth: 'This Month',
+    filterYear: 'This Year',
+    filterAll: 'All History',
+    filterCustom: 'Custom Range',
+    recentTransactions: 'Recent Transactions',
+    searchPlaceholder: 'Search notes, categories or #tags...',
+    noTransactions: 'No transaction entries in this range',
+    customStartDate: 'Start Date',
+    customEndDate: 'End Date',
+    deleteConfirm: 'Delete entry',
+    totalEntriesCount: 'entries',
+
+    // AddTransaction
+    addTransactionTitle: 'New Transaction',
+    addTransactionSubtitle: 'Quickly record daily expenses & income',
+    expenseTab: 'Expense',
+    incomeTab: 'Income',
+    currencyLabel: 'Currency',
+    amountLabel: 'Amount',
+    amountPlaceholder: '0',
+    categoryLabel: 'Category',
+    subcategoryLabel: 'Subcategory (Optional)',
+    noteLabel: 'Note / Remark (Optional)',
+    notePlaceholder: 'e.g., Coffee with friends, or add #tags',
+    tagsLabel: 'Custom Tags (Optional)',
+    tagsPlaceholder: 'Type a tag and press Enter (e.g. #travel)',
+    dateLabel: 'Transaction Date',
+    saveBtn: 'Save Entry',
+    enterValidAmount: 'Please enter a valid amount!',
+
+    // Analysis
+    analysisTitle: 'Expense Analytics & Budget',
+    analysisSubtitle: 'Donut chart, multi-currency views & category budgets',
+    analysisMonthSelect: 'Analysis Month',
+    displayCurrencyLabel: 'Display Base Currency',
+    multiCurrencyBreakdown: 'Original Amounts by Currency',
+    singleConvertedTotal: 'Converted Single Total',
+    exchangeRateHint: 'Exchange Rate Reference',
+    displayModeMulti: 'Mode 1: Separate Currencies',
+    displayModeConverted: 'Mode 2: Converted Single Currency',
+    totalExpenseCard: 'Accumulated Expenses',
+    totalBudgetCard: 'Set Monthly Budget',
+    remainingBudgetCard: 'Remaining Budget',
+    budgetExecutionRate: 'Execution Rate',
+    editBudgetBtn: '⚙️ Edit Category Budgets',
+    closeEditBudgetBtn: 'Done',
+    pieChartTitle: 'Category Expense Distribution',
+    dailyTrendTitle: 'Daily Expense Trend',
+    budgetProgressTitle: 'Category Budget Progress',
+    noExpenseData: 'No expense records available for this month',
+    overBudgetTag: 'Over Budget',
+    safeBudgetTag: 'On Track',
+    saveBudgetSuccess: 'Category budgets updated!',
+    allCategories: 'All Categories',
+    clickCategoryHint: 'Click any category to inspect monthly consumption, click again to return',
+    clickAgainToReturn: 'Click again to return',
+    backToOverview: 'Back to Overview',
+    categoryMonthlySpending: 'Monthly Category Spending',
+    categoryShareOfTotal: 'Share of Monthly Expense',
+    categoryTransactionsCount: 'Transactions',
+    subcategoryDistribution: 'Subcategory Breakdown',
+    categoryRecordsList: 'Transactions in this Category',
+    noCategoryRecords: 'No expenses in this category for this month',
+    categoryBudgetRemaining: 'Remaining',
+    categoryBudgetOver: 'Over Budget',
+
+    // Recurring Transactions
+    recurringTitle: 'Recurring Transactions',
+    recurringSubtitle: 'Automate monthly rent, salary, or subscription fees',
+    addRecurringBtn: '➕ Add Recurring Item',
+    editRecurringBtn: 'Edit Rule',
+    saveRecurringBtn: 'Save Rule',
+    ruleTitleLabel: 'Item Title',
+    ruleTitlePlaceholder: 'e.g., House Rent, Netflix, Monthly Salary',
+    recurringDayLabel: 'Monthly Day of Execution',
+    dayOfMonthOption: 'th',
+    startMonthLabel: 'Effective Start Month',
+    amountChangeNotice: '💡 Historic Protection: Amount updates only affect future generated entries. Past historical entries remain unchanged.',
+    autoGeneratedTag: 'Auto Generated',
+    generateNowBtn: '⚡ Sync Due Recurring Entries',
+    noRecurringRules: 'No recurring transactions set up yet',
+    deleteRuleConfirm: 'Delete this recurring rule?',
+    generateSuccessMsg: '✅ Updated recurring entries added!',
+
+    // Settings Header & Account
+    settingsTitle: 'Settings & Cloud Backup',
+    settingsSubtitle: 'Personalize theme, exchange rates & sync accounting records',
+    accountSectionTitle: 'Account & Sync',
+    guestUserTitle: 'Guest Mode (Not Logged In)',
+    guestUserDesc: 'Sign in to automatically backup your bookkeeping records to cloud and restore them anytime on any device!',
+    loginPromptBtn: 'Sign In / Register',
+    demoLoginBtn: '⚡ Quick Demo Sign In',
+
+    // Logged in User state
+    loggedInStatus: 'Signed In · Cloud Sync Active',
+    lastSynced: 'Last Synced',
+    syncNowBtn: '☁️ Backup to Cloud',
+    restoreNowBtn: '🔄 Restore Records',
+    logoutBtn: 'Sign Out',
+    syncSuccessMsg: '✅ Bookkeeping records backed up to your account successfully!',
+    restoreSuccessMsg: '✅ All historical records restored from cloud successfully!',
+
+    // Exchange Rates Setting
+    exchangeRatesTitle: 'Custom Exchange Rates',
+    exchangeRatesSubtitle: 'Set conversion reference rate to NTD',
+
+    // Modal Login / Register
+    modalTitleLogin: 'Sign In to Account',
+    modalTitleRegister: 'Create New Account',
+    modalSubText: 'Sync and securely back up your income and expense entries',
+    emailLabel: 'Email Address',
+    emailPlaceholder: 'example@domain.com',
+    passwordLabel: 'Password',
+    passwordPlaceholder: 'Enter password',
+    nameLabel: 'Your Nickname',
+    namePlaceholder: 'e.g. Alex',
+    loginSubmit: 'Sign In',
+    registerSubmit: 'Create & Sign In',
+    switchRegister: 'No account yet? Register here',
+    switchLogin: 'Already have an account? Sign in',
+    cancel: 'Cancel',
+    fillRequired: 'Please fill in valid email and password!',
+
+    // Preferences: Theme & Language
+    preferencesTitle: 'Preferences',
+    themeLabel: 'Appearance Theme',
+    lightMode: '☀️ Light Mode',
+    darkMode: '🌙 Dark Mode',
+    languageLabel: 'Display Language',
+    zhLang: '繁體中文 (Chinese)',
+    enLang: 'English',
+
+    // Budget Summary & Reset
+    budgetOverviewTitle: 'Monthly Budget Summary',
+    budgetTotalLabel: 'Total Category Budgets',
+    budgetNote: 'Adjust individual category budget limits under the Analytics tab.',
+    dataManagementTitle: 'Data Management',
+    resetDemoDataBtn: '🗑️ Reset to Sample Data',
+    confirmResetAlert: 'Are you sure you want to reset all data to sample records?',
+    resetSuccessAlert: 'Data reset successfully!',
+
+    // General app terms
+    totalExpense: 'Monthly Expense',
+    totalIncome: 'Monthly Income',
+    netBalance: 'Net Balance',
+    budgetRemaining: 'Budget Left',
+    budgetOver: 'Over Budget',
+  }
+};
+
+export function t(lang: Language, key: keyof typeof TRANSLATIONS['zh']): string {
+  return TRANSLATIONS[lang]?.[key] || TRANSLATIONS['zh'][key] || key;
+}

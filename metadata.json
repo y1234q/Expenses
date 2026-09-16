@@ -1,0 +1,6 @@
+{
+  "name": "iOS Style Expense Tracker",
+  "description": "A personal daily income and expense tracker designed with an iOS-native feel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

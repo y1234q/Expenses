@@ -1,0 +1,50 @@
+{
+  "entities": {
+    "Transaction": {
+      "title": "Transaction",
+      "description": "User income and expense transaction records",
+      "type": "object",
+      "properties": {
+        "amount": { "type": "number", "description": "The monetary amount" },
+        "currency": { "type": "string", "maxLength": 3 },
+        "type": { "type": "string", "enum": ["income", "expense"] },
+        "category": { "type": "string", "maxLength": 100 },
+        "subcategory": { "type": "string", "maxLength": 100 },
+        "note": { "type": "string", "maxLength": 500 },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 50 }
+        },
+        "date": { "type": "string", "maxLength": 30 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "number", "description": "Server timestamp" },
+        "updatedAt": { "type": "number", "description": "Server timestamp" }
+      },
+      "required": ["amount", "type", "category", "date", "currency", "userId", "createdAt", "updatedAt"]
+    },
+    "UserSetting": {
+      "title": "User Settings",
+      "description": "User preferences and category budgets",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "categoryBudgets": { "type": "string", "description": "JSON string of category budgets", "maxLength": 5000 },
+        "language": { "type": "string", "maxLength": 10 },
+        "theme": { "type": "string", "maxLength": 10 },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["userId", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": { "$ref": "Transaction" },
+      "description": "User's transactions"
+    },
+    "/users/{userId}/settings/{settingId}": {
+      "schema": { "$ref": "UserSetting" },
+      "description": "User's settings (single document 'default')"
+    }
+  }
+}
