@@ -345,7 +345,7 @@ export default function App() {
       isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-900 text-gray-900'
     }`}>
       {/* iOS Device Chassis Constraint */}
-      <div className={`w-full max-w-[412px] h-[100dvh] sm:h-[840px] sm:rounded-[3.2rem] sm:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] sm:border-[10px] border-gray-900 relative overflow-hidden flex flex-col transition-colors duration-300 ${
+      <div className={`w-full max-w-[412px] h-screen h-[100dvh] sm:h-[840px] sm:rounded-[3.2rem] sm:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] sm:border-[10px] border-gray-900 relative overflow-hidden flex flex-col transition-colors duration-300 ${
         isDark ? 'bg-slate-900 text-slate-100' : 'bg-gray-50 text-gray-900'
       }`}>
         
